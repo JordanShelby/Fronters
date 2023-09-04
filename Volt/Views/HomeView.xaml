@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="TabScores.Views.HomeView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:TabScores.ViewModels"
+    x:Name="This"
+    Padding="6">
+    <ContentView.BindingContext>
+        <viewModels:HomeViewModel />
+    </ContentView.BindingContext>
+    <ScrollView>
+        <Grid RowDefinitions="*,100">
+            <VerticalStackLayout>
+                <Border
+                    Padding="13,32"
+                    BackgroundColor="{DynamicResource ControlFill}"
+                    StrokeShape="RoundRectangle 20,20,20,20"
+                    StrokeThickness="0">
+                    <VerticalStackLayout Spacing="8">
+                        <Label
+                            FontSize="11"
+                            HorizontalOptions="Center"
+                            Text="This tab is currently open with participants that owe!"
+                            TextColor="DarkGray"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="14"
+                            HorizontalOptions="Center"
+                            Text="Airbnb in Dallas, Texas"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <HorizontalStackLayout
+                            Padding="0,16"
+                            HorizontalOptions="Center"
+                            Spacing="24">
+                            <VerticalStackLayout Spacing="4">
+                                <HorizontalStackLayout>
+                                    <Border
+                                        Margin="6,0,0,0"
+                                        BackgroundColor="{DynamicResource PrimaryAccent}"
+                                        HeightRequest="20"
+                                        Stroke="{DynamicResource ControlFill}"
+                                        StrokeShape="RoundRectangle 10,10,10,10"
+                                        WidthRequest="20" />
+                                    <Border
+                                        Margin="-6,0,0,0"
+                                        BackgroundColor="{DynamicResource PrimaryAccent}"
+                                        HeightRequest="20"
+                                        Stroke="{DynamicResource ControlFill}"
+                                        StrokeShape="RoundRectangle 10,10,10,10"
+                                        WidthRequest="20" />
+                                    <Border
+                                        Margin="-6,0,0,0"
+                                        BackgroundColor="{DynamicResource PrimaryAccent}"
+                                        HeightRequest="20"
+                                        Stroke="{DynamicResource ControlFill}"
+                                        StrokeShape="RoundRectangle 10,10,10,10"
+                                        WidthRequest="20" />
+                                </HorizontalStackLayout>
+
+                                <Label
+                                    FontSize="12"
+                                    Text="3/4 people"
+                                    TextColor="{DynamicResource PrimaryTextColor}" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="4">
+                                <Image
+                                    HeightRequest="20"
+                                    Source="clock.png"
+                                    WidthRequest="20" />
+                                <Label
+                                    FontSize="12"
+                                    Text="Sat, Jun 18"
+                                    TextColor="{DynamicResource PrimaryTextColor}" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="4">
+                                <Image
+                                    HeightRequest="20"
+                                    Source="money.png"
+                                    WidthRequest="20" />
+                                <Label
+                                    FontSize="12"
+                                    Text="$650"
+                                    TextColor="{DynamicResource PrimaryTextColor}" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+                <Label
+                    Margin="0,20,0,0"
+                    FontAttributes="Bold"
+                    Text="Participants that owe"
+                    TextColor="Gray" />
+                <ScrollView
+                    Margin="0,6,0,0"
+                    HorizontalScrollBarVisibility="Never"
+                    Orientation="Horizontal">
+                    <HorizontalStackLayout BindableLayout.ItemsSource="{Binding Users}" Spacing="6">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Border
+                                    Padding="12"
+                                    BackgroundColor="{DynamicResource ControlFill}"
+                                    HeightRequest="100"
+                                    StrokeShape="RoundRectangle 20,20,20,20"
+                                    StrokeThickness="0"
+                                    WidthRequest="100">
+                                    <Grid VerticalOptions="Fill">
+                                        <VerticalStackLayout HorizontalOptions="Center">
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="17"
+                                                HorizontalTextAlignment="Center"
+                                                Text="$46"
+                                                TextColor="{DynamicResource PrimaryAccent}" />
+                                            <Label
+                                                FontSize="11"
+                                                HorizontalTextAlignment="Center"
+                                                Text="3 days left"
+                                                TextColor="{DynamicResource PrimaryTextColor}" />
+                                        </VerticalStackLayout>
+                                        <Label
+                                            Text="{Binding UserName}"
+                                            TextColor="{DynamicResource PrimaryTextColor}"
+                                            VerticalOptions="End" />
+                                    </Grid>
+
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectParticipantCommand, Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}}" CommandParameter="{Binding .}" />
+                                    </Border.GestureRecognizers>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </HorizontalStackLayout>
+                </ScrollView>
+            </VerticalStackLayout>
+            <ScrollView
+                Grid.Row="1"
+                HorizontalScrollBarVisibility="Never"
+                Orientation="Horizontal"
+                VerticalOptions="End">
+                <HorizontalStackLayout BindableLayout.ItemsSource="{Binding Presets}" Spacing="6">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Padding="12"
+                                BackgroundColor="{DynamicResource ControlFill}"
+                                HeightRequest="80"
+                                StrokeShape="RoundRectangle 20,20,20,20"
+                                StrokeThickness="0"
+                                WidthRequest="200">
+                                <Label
+                                    Text="{Binding .}"
+                                    TextColor="{DynamicResource PrimaryTextColor}"
+                                    VerticalOptions="End" />
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectParticipantCommand, Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}}" CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </HorizontalStackLayout>
+            </ScrollView>
+        </Grid>
+    </ScrollView>
+</ContentView>

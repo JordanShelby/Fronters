@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TabScores.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewModels="clr-namespace:TabScores.ViewModels"
+    xmlns:views="clr-namespace:TabScores.Views"
+    x:Name="This"
+    BackgroundColor="{DynamicResource PageBackgroundColor}"
+    Shell.NavBarIsVisible="False">
+
+    <ContentPage.BindingContext>
+        <viewModels:MainViewModel />
+    </ContentPage.BindingContext>
+    <Grid RowDefinitions="50,*" RowSpacing="0">
+        <AbsoluteLayout Padding="6,0">
+            <ImageButton
+                AbsoluteLayout.LayoutBounds="1,0.5,30,30"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                BackgroundColor="{DynamicResource ControlFill}"
+                Clicked="MenuButtonClicked"
+                CornerRadius="15" />
+            <Grid
+                AbsoluteLayout.LayoutBounds="0.5,0,400,50"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                HorizontalOptions="Center"
+                RowDefinitions="30,4">
+                <HorizontalStackLayout
+                    x:Name="TabLayout"
+                    Padding="0,6"
+                    RadioButtonGroup.GroupName="Tabs"
+                    Spacing="12">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <RadioButton
+                                CheckedChanged="TabChanged"
+                                Content="{Binding .}"
+                                GroupName="Tabs">
+                                <RadioButton.ControlTemplate>
+                                    <ControlTemplate>
+                                        <Label x:Name="Label" Text="{TemplateBinding Content}">
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroupList>
+                                                    <VisualStateGroup x:Name="CheckedStates">
+                                                        <VisualState x:Name="Checked">
+                                                            <VisualState.Setters>
+                                                                <Setter TargetName="Label" Property="Label.TextColor" Value="{DynamicResource PrimaryAccent}" />
+                                                            </VisualState.Setters>
+                                                        </VisualState>
+
+                                                        <VisualState x:Name="Unchecked">
+                                                            <VisualState.Setters>
+                                                                <Setter TargetName="Label" Property="Label.TextColor" Value="{DynamicResource ControlFill}" />
+                                                            </VisualState.Setters>
+                                                        </VisualState>
+                                                    </VisualStateGroup>
+                                                </VisualStateGroupList>
+                                            </VisualStateManager.VisualStateGroups>
+                                        </Label>
+                                    </ControlTemplate>
+                                </RadioButton.ControlTemplate>
+                            </RadioButton>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                    <BindableLayout.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Open Tabs</x:String>
+                            <x:String>Events</x:String>
+                        </x:Array>
+                    </BindableLayout.ItemsSource>
+                </HorizontalStackLayout>
+                <BoxView
+                    x:Name="Indicator"
+                    Grid.Row="1"
+                    BackgroundColor="{DynamicResource PrimaryAccent}"
+                    CornerRadius="4"
+                    HeightRequest="4"
+                    HorizontalOptions="Start"
+                    WidthRequest="68"
+                    Color="{DynamicResource PrimaryAccent}" />
+            </Grid>
+        </AbsoluteLayout>
+        <views:HomeView x:Name="Home" Grid.Row="1" />
+        <views:EventsView x:Name="Events" Grid.Row="1" />
+        <Frame
+            x:Name="Backdrop"
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            BackgroundColor="#4b000000"
+            BorderColor="Transparent"
+            CornerRadius="0"
+            InputTransparent="True"
+            IsVisible="False"
+            Opacity="0">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="BackdropTapped" />
+            </Frame.GestureRecognizers>
+        </Frame>
+
+        <Border
+            x:Name="BottomDrawer"
+            Grid.Row="1"
+            Padding="15,6"
+            BackgroundColor="{DynamicResource ControlFill}"
+            HeightRequest="300"
+            StrokeShape="RoundRectangle 20,20,0,0"
+            StrokeThickness="0"
+            TranslationY="320"
+            VerticalOptions="End">
+            <Border.GestureRecognizers>
+                <PanGestureRecognizer PanUpdated="BottomDrawerPanUpdated" />
+            </Border.GestureRecognizers>
+        </Border>
+    </Grid>
+</ContentPage>
